@@ -1,36 +1,43 @@
-<div class="sidebar" *ngIf="currentUser$ | async as user">
-  <nav class="sidebar-nav">
+<aside class="sidebar" *ngIf="currentUser$ | async as user">
+  <div class="sidebar-heading">WORKSPACE</div>
+  <nav class="sidebar-nav" aria-label="Main navigation">
     <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-      <mat-icon>dashboard</mat-icon>
-      <span>Dashboard</span>
+      <span class="nav-icon nav-icon-violet"><mat-icon>space_dashboard</mat-icon></span>
+      <span class="nav-label">Overview</span>
+      <mat-icon class="nav-chevron">chevron_right</mat-icon>
     </a>
-
     <a routerLink="/expenses" routerLinkActive="active" class="nav-item">
-      <mat-icon>receipt_long</mat-icon>
-      <span>Expenses</span>
+      <span class="nav-icon nav-icon-blue"><mat-icon>receipt_long</mat-icon></span>
+      <span class="nav-label">Transactions</span>
     </a>
-
     <a routerLink="/expenses/add" routerLinkActive="active" class="nav-item">
-      <mat-icon>add_circle</mat-icon>
-      <span>Add Expense</span>
+      <span class="nav-icon nav-icon-green"><mat-icon>add_card</mat-icon></span>
+      <span class="nav-label">Add expense</span>
     </a>
-
-    <a routerLink="/settlements" routerLinkActive="active" class="nav-item">
-      <mat-icon>account_balance_wallet</mat-icon>
-      <span>Settlements</span>
-    </a>
-
     <a routerLink="/groups" routerLinkActive="active" class="nav-item">
-      <mat-icon>group</mat-icon>
-      <span>Groups</span>
+      <span class="nav-icon nav-icon-orange"><mat-icon>diversity_3</mat-icon></span>
+      <span class="nav-label">My groups</span>
     </a>
-
-    <a routerLink="/profile" routerLinkActive="active" class="nav-item">
-      <mat-icon>person</mat-icon>
-      <span>Profile</span>
+    <a routerLink="/settlements" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon nav-icon-pink"><mat-icon>currency_exchange</mat-icon></span>
+      <span class="nav-label">Settlements</span>
     </a>
   </nav>
 
+  <div class="sidebar-heading secondary-heading">PREFERENCES</div>
+  <nav class="sidebar-nav" aria-label="Account navigation">
+    <a routerLink="/profile" routerLinkActive="active" class="nav-item">
+      <span class="nav-icon nav-icon-slate"><mat-icon>account_circle</mat-icon></span>
+      <span class="nav-label">My profile</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-tip">
+    <span class="tip-icon"><mat-icon>auto_awesome</mat-icon></span>
+    <div class="tip-title">Money, made simple.</div>
+    <p>Keep every shared expense clear and organised.</p>
+  </div>
   <div class="sidebar-footer">
     <div class="user-info">
       <div class="avatar">{{ getInitials(user.name) }}</div>
@@ -38,6 +45,7 @@
         <span class="name">{{ user.name }}</span>
         <span class="email">{{ user.email }}</span>
       </div>
+      <mat-icon class="verified-icon">verified</mat-icon>
     </div>
   </div>
-</div>
+</aside>
