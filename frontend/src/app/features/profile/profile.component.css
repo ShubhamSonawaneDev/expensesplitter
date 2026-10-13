@@ -52,11 +52,11 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #818CF8 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #21b59b 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 8px 24px rgba(12, 157, 133, 0.20);
 }
 
 .avatar mat-icon {
@@ -85,7 +85,7 @@
 
 .avatar-edit-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 4px 12px rgba(12, 157, 133, 0.3);
 }
 
 .avatar-edit-btn mat-icon {
@@ -203,7 +203,7 @@
 .action-buttons .save-btn {
   padding: 10px 20px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #818CF8 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #21b59b 100%);
   border: none;
   color: white;
   font-weight: 600;
@@ -214,7 +214,7 @@
 
 .action-buttons .save-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 6px 20px rgba(12, 157, 133, 0.3);
 }
 
 .action-buttons .save-btn:disabled {
