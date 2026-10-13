@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
-import { ThemeService } from '../core/services/theme.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -29,24 +28,14 @@ import { User } from '../core/models/user.model';
 export class NavbarComponent implements OnInit {
   currentUser$: Observable<User | null>;
   unreadCount = 0;
-  isDarkMode = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private themeService: ThemeService,
   ) {
     this.currentUser$ = this.authService.currentUser$;
   }
 
-  ngOnInit(): void {
-    this.isDarkMode = this.themeService.isDarkMode();
-  }
-
-  toggleTheme(): void {
-    this.themeService.toggleTheme();
-    this.isDarkMode = this.themeService.isDarkMode();
-  }
 
   getInitials(name: string): string {
     if (!name) return '?';
