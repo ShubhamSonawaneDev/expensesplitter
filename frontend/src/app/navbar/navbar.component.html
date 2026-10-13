@@ -1,34 +1,40 @@
-<nav class="navbar">
-  <div class="navbar-brand">
-    <div class="logo" routerLink="/dashboard">
-      <span class="logo-icon">💰</span>
-      <span class="logo-text">ExpenseSplitter</span>
-    </div>
-  </div>
+<nav class="navbar app-navbar">
+  <a class="navbar-brand" routerLink="/dashboard" aria-label="Expense Splitter dashboard">
+    <span class="brand-mark"><mat-icon>account_balance_wallet</mat-icon></span>
+    <span class="brand-copy">
+      <span class="brand-name">Splitwise<span class="brand-dot">.</span></span>
+      <span class="brand-caption">EXPENSE MANAGER</span>
+    </span>
+  </a>
 
   <div class="navbar-actions">
-    <button class="theme-toggle" (click)="toggleTheme()" title="Toggle theme">
+    <span class="workspace-label"><span class="status-dot"></span> Personal workspace</span>
+
+    <button class="icon-action theme-toggle" type="button" (click)="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
       <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
 
-    <button class="notification-btn" routerLink="/notifications">
+    <button class="icon-action notification-btn" type="button" routerLink="/notifications" title="Notifications" aria-label="Notifications">
       <mat-icon>notifications_none</mat-icon>
       <span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
     </button>
 
     <div class="user-menu" *ngIf="currentUser$ | async as user">
-      <button class="user-btn" [matMenuTriggerFor]="userMenu">
-        <div class="avatar">{{ getInitials(user.name) }}</div>
-        <span class="user-name">{{ user.name }}</span>
-        <mat-icon>expand_more</mat-icon>
+      <button class="user-btn" type="button" [matMenuTriggerFor]="userMenu" aria-label="Open user menu">
+        <span class="avatar">{{ getInitials(user.name) }}</span>
+        <span class="user-copy">
+          <span class="user-name">{{ user.name }}</span>
+          <span class="user-role">Account</span>
+        </span>
+        <mat-icon class="user-chevron">keyboard_arrow_down</mat-icon>
       </button>
       <mat-menu #userMenu="matMenu" class="user-dropdown">
         <button mat-menu-item routerLink="/profile">
-          <mat-icon>person</mat-icon>
+          <mat-icon>manage_accounts</mat-icon>
           <span>Profile</span>
         </button>
         <button mat-menu-item routerLink="/settings">
-          <mat-icon>settings</mat-icon>
+          <mat-icon>tune</mat-icon>
           <span>Settings</span>
         </button>
         <mat-divider></mat-divider>
