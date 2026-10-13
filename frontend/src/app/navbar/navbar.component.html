@@ -1,41 +1,21 @@
 <nav class="navbar">
   <div class="navbar-brand">
-    <div class="logo" routerLink="/dashboard">
-      <span class="logo-icon">💰</span>
-      <span class="logo-text">ExpenseSplitter</span>
+    <div class="logo" routerLink="/dashboard" aria-label="ExpenseSplitter home">
+      <span class="logo-icon"><i class="bi bi-wallet2"></i></span>
+      <span class="logo-text">Expense<span>Splitter</span></span>
     </div>
   </div>
-
   <div class="navbar-actions">
-    <button class="theme-toggle" (click)="toggleTheme()" title="Toggle theme">
-      <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
-    </button>
-
-    <button class="notification-btn" routerLink="/notifications">
-      <mat-icon>notifications_none</mat-icon>
-      <span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
-    </button>
-
+    <span class="navbar-divider" aria-hidden="true"></span>
+    <button class="theme-toggle" (click)="toggleTheme()" title="Toggle theme" aria-label="Toggle theme"><mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon></button>
+    <button class="notification-btn" routerLink="/notifications" aria-label="Notifications"><mat-icon>notifications_none</mat-icon><span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span></button>
     <div class="user-menu" *ngIf="currentUser$ | async as user">
-      <button class="user-btn" [matMenuTriggerFor]="userMenu">
-        <div class="avatar">{{ getInitials(user.name) }}</div>
-        <span class="user-name">{{ user.name }}</span>
-        <mat-icon>expand_more</mat-icon>
-      </button>
+      <button class="user-btn" [matMenuTriggerFor]="userMenu"><div class="avatar">{{ getInitials(user.name) }}</div><span class="user-name">{{ user.name }}</span><mat-icon>expand_more</mat-icon></button>
       <mat-menu #userMenu="matMenu" class="user-dropdown">
-        <button mat-menu-item routerLink="/profile">
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
-        </button>
-        <button mat-menu-item routerLink="/settings">
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
-        </button>
+        <button mat-menu-item routerLink="/profile"><mat-icon>person</mat-icon><span>Profile</span></button>
+        <button mat-menu-item routerLink="/settings"><mat-icon>settings</mat-icon><span>Settings</span></button>
         <mat-divider></mat-divider>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>Logout</span>
-        </button>
+        <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon><span>Logout</span></button>
       </mat-menu>
     </div>
   </div>

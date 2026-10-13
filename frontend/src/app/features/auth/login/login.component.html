@@ -1,58 +1,27 @@
-<div class="auth-container">
-  <mat-card class="auth-card">
-    <mat-card-header>
-      <div class="brand-logo">
-        <mat-icon>account_balance_wallet</mat-icon>
-      </div>
-      <h2>Welcome Back</h2>
-      <p>Sign in to your Expense Splitter account</p>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-      
+<section class="auth-container auth-login">
+  <div class="auth-art">
+    <a class="auth-brand" routerLink="/auth/login"><span class="auth-brand-mark"><i class="bi bi-wallet2"></i></span><span>Splitwise<span class="brand-dot">.</span></span></a>
+    <div class="art-content">
+      <span class="art-eyebrow"><i class="bi bi-stars"></i> MONEY, MADE SIMPLE</span>
+      <h1>Good friends.<br><em>Clear balances.</em></h1>
+      <p>Track shared expenses, settle up without awkwardness, and keep every group on the same page.</p>
+      <div class="art-stat-row"><div><strong>01</strong><span>Add shared costs</span></div><div><strong>02</strong><span>Split fairly</span></div><div><strong>03</strong><span>Settle simply</span></div></div>
+    </div>
+    <div class="art-visual" aria-hidden="true"><div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div><div class="visual-card card-main"><span class="visual-card-icon"><i class="bi bi-arrow-left-right"></i></span><span class="visual-card-label">Trip to Goa</span><strong>₹ 4,850.00</strong><span class="visual-card-foot"><i class="bi bi-check-circle-fill"></i> Split fairly with 4 friends</span></div><div class="visual-card card-float"><span class="mini-avatar">A</span><span><small>Arjun paid</small><strong>₹ 1,200</strong></span><i class="bi bi-check-circle-fill"></i></div><div class="visual-dot dot-one"></div><div class="visual-dot dot-two"></div></div>
+    <div class="art-footer"><span><i class="bi bi-shield-check"></i> Your money data stays yours</span><span>EXPENSES, IN BALANCE.</span></div>
+  </div>
+  <div class="auth-form-side">
+    <div class="auth-form-wrap">
+      <div class="mobile-brand"><span class="auth-brand-mark"><i class="bi bi-wallet2"></i></span><span>ExpenseSplitter</span></div>
+      <div class="form-intro"><span class="form-eyebrow">WELCOME BACK</span><h2>Sign in to your account</h2><p>Pick up right where you left off.</p></div>
+      <div *ngIf="errorMessage" class="alert alert-danger"><i class="bi bi-exclamation-circle"></i>{{ errorMessage }}</div>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput id="email" name="email" type="email" formControlName="email" placeholder="Enter your email" label="email" />
-          <mat-error *ngIf="f['email'].hasError('required')"> Email is required </mat-error>
-          <mat-error *ngIf="f['email'].hasError('email')"> Please enter a valid email </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            id="password"
-            name="password"
-            type="password"
-            formControlName="password"
-            placeholder="Enter your password"
-            label="password"
-          />
-          <mat-error *ngIf="f['password'].hasError('required')"> Password is required </mat-error>
-          <mat-error *ngIf="f['password'].hasError('minlength')">
-            Password must be at least 6 characters
-          </mat-error>
-        </mat-form-field>
-
-        <button
-          mat-raised-button
-          color="primary"
-          class="full-width login-button"
-          type="submit"
-          [disabled]="loading"
-        >
-          <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
-          <span *ngIf="!loading">Sign In</span>
-        </button>
+        <mat-form-field appearance="outline" class="full-width"><mat-label>Email address</mat-label><mat-icon matPrefix>mail_outline</mat-icon><input matInput id="email" name="email" type="email" formControlName="email" placeholder="you@example.com" autocomplete="email" /><mat-error *ngIf="f['email'].hasError('required')">Email is required</mat-error><mat-error *ngIf="f['email'].hasError('email')">Please enter a valid email</mat-error></mat-form-field>
+        <mat-form-field appearance="outline" class="full-width"><mat-label>Password</mat-label><mat-icon matPrefix>lock_outline</mat-icon><input matInput id="password" name="password" type="password" formControlName="password" placeholder="Enter your password" autocomplete="current-password" /><mat-error *ngIf="f['password'].hasError('required')">Password is required</mat-error><mat-error *ngIf="f['password'].hasError('minlength')">Password must be at least 6 characters</mat-error></mat-form-field>
+        <button mat-raised-button color="primary" class="full-width auth-submit login-button" type="submit" [disabled]="loading"><mat-spinner *ngIf="loading" diameter="20"></mat-spinner><span *ngIf="!loading">Sign in <i class="bi bi-arrow-right"></i></span></button>
       </form>
-
-      <div class="auth-footer">
-        <p>Don't have an account? <a routerLink="/auth/register">Create one</a></p>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+      <div class="auth-footer"><p>New to ExpenseSplitter? <a routerLink="/auth/register">Create an account <i class="bi bi-arrow-up-right"></i></a></p></div>
+      <p class="auth-legal"><i class="bi bi-lock"></i> Secure access to your shared expenses</p>
+    </div>
+  </div>
+</section>
