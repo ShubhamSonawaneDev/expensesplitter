@@ -1,8 +1,8 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
-$primary-palette: mat.define-palette(mat.$teal-palette, 700);
-$accent-palette: mat.define-palette(mat.$cyan-palette, 700, 500, 900);
+$primary-palette: mat.define-palette(mat.$indigo-palette, 600);
+$accent-palette: mat.define-palette(mat.$purple-palette, A200, A100, A400);
 $warn-palette: mat.define-palette(mat.$red-palette);
 
 $theme: mat.define-light-theme((
@@ -823,10 +823,10 @@ img, canvas, video, svg { max-width: 100%; }
 /* ExpenseSplitter design system — consistent light UI across feature routes. */
 :root {
   color-scheme: light;
-  --color-primary: #0c9d85;
-  --color-primary-light: #21b59b;
-  --color-primary-dark: #087f71;
-  --color-primary-darker: #06685e;
+  --color-primary: #3478e5;
+  --color-primary-light: #6d5ce8;
+  --color-primary-dark: #245fca;
+  --color-primary-darker: #244bb8;
   --color-secondary: #3478e5;
   --color-background: #f5f7fb;
   --color-surface: #ffffff;
@@ -847,7 +847,7 @@ body.dark-theme, html[data-theme="dark"] { color-scheme: light !important; }
 .page { min-width: 0; }
 :where(button, input, select, textarea) { font: inherit; }
 :where(button, a, input, select, textarea):focus-visible {
-  outline: 3px solid rgba(12, 157, 133, .25);
+  outline: 3px solid rgba(52, 120, 229, .25);
   outline-offset: 2px;
 }
 :where(.mat-mdc-card, mat-card, .panel, .summary-card, .profile-card, .group-card, .expense-card, .settlement-card) {
@@ -883,7 +883,7 @@ body.dark-theme, html[data-theme="dark"] { color-scheme: light !important; }
   gap: 12px;
 }
 :where(.error-message, .form-error, .field-error) { color: #b42318; }
-:where(.success-message) { color: #087f71; }
+:where(.success-message) { color: #245fca; }
 @media (hover: hover) {
   :where(.mat-mdc-card, mat-card, .panel, .summary-card, .profile-card, .group-card, .expense-card, .settlement-card):hover {
     box-shadow: var(--shadow-card-hover);
