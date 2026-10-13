@@ -1,49 +1,38 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 export type Theme = 'light' | 'dark';
 
-@Injectable({
-  providedIn: 'root',
-})
+/** The app currently uses a fixed light theme; dark mode is intentionally disabled. */
+@Injectable({ providedIn: 'root' })
 export class ThemeService {
   private readonly STORAGE_KEY = 'app_theme';
-  
-  theme = signal<Theme>(this.getStoredTheme());
+  theme = signal<Theme>('light');
 
   constructor() {
-    effect(() => {
-      const currentTheme = this.theme();
-      this.applyTheme(currentTheme);
-      localStorage.setItem(this.STORAGE_KEY, currentTheme);
-    });
+    this.applyLightTheme();
+    try {
+      localStorage.setItem(this.STORAGE_KEY, 'light');
+    } catch {
+      // Storage may be unavailable in private browsing; the UI still stays light.
+    }
   }
 
-  private getStoredTheme(): Theme {
-    const stored = localStorage.getItem(this.STORAGE_KEY) as Theme;
-    if (stored) {
-      return stored;
-    }
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  }
-
-  private applyTheme(theme: Theme): void {
-    document.body.classList.remove('light-theme', 'dark-theme');
-    document.body.classList.add(`${theme}-theme`);
-    document.documentElement.setAttribute('data-theme', theme);
+  private applyLightTheme(): void {
+    document.body.classList.remove('dark-theme');
+    document.body.classList.add('light-theme');
+    document.documentElement.setAttribute('data-theme', 'light');
   }
 
   toggleTheme(): void {
-    this.theme.update((current) => (current === 'light' ? 'dark' : 'light'));
+    this.setTheme('light');
   }
 
-  setTheme(theme: Theme): void {
-    this.theme.set(theme);
+  setTheme(_theme: Theme): void {
+    this.theme.set('light');
+    this.applyLightTheme();
   }
 
   isDarkMode(): boolean {
-    return this.theme() === 'dark';
+    return false;
   }
 }

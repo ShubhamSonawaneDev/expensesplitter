@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
-$primary-palette: mat.define-palette(mat.$indigo-palette, 500);
+$primary-palette: mat.define-palette(mat.$indigo-palette, 600);
 $accent-palette: mat.define-palette(mat.$purple-palette, A200, A100, A400);
 $warn-palette: mat.define-palette(mat.$red-palette);
 
@@ -776,3 +776,124 @@ table.mat-mdc-table,.mat-mdc-table{width:100%;background:#fff;border-radius:14px
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #0c9d8555;outline-offset:2px}
 @media(max-width:768px){:root{--navbar-height:64px}.page{margin-left:0;padding:16px 13px 86px}.mat-mdc-table{min-width:620px}.mat-mdc-card{border-radius:14px!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Shared light-theme component polish: keep controls consistent across routes. */
+:root {
+  color-scheme: light;
+  --color-primary: #0c9d85;
+  --color-primary-light: #21b59b;
+  --color-primary-dark: #087f71;
+  --color-secondary: #3478e5;
+  --color-background: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-text-primary: #172944;
+  --color-text-secondary: #52627c;
+  --color-border: #e1e8f1;
+}
+html[data-theme="dark"], body.dark-theme, .dark-theme {
+  color-scheme: light !important;
+}
+body, .app-container, .layout, .page {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+.mat-mdc-card, mat-card {
+  border: 1px solid var(--color-border-light) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.mat-mdc-raised-button.mat-primary,
+button.btn-primary, .btn.btn-primary {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+}
+.mat-mdc-raised-button.mat-primary:hover:not(:disabled),
+button.btn-primary:hover, .btn.btn-primary:hover {
+  background: var(--color-primary-dark) !important;
+}
+.mat-mdc-form-field { max-width: 100%; }
+img, canvas, video, svg { max-width: 100%; }
+@media (max-width: 768px) {
+  .page { margin-left: 0; padding: 0 0 80px; min-width: 0; }
+}
+
+
+
+/* ExpenseSplitter design system — consistent light UI across feature routes. */
+:root {
+  color-scheme: light;
+  --color-primary: #3478e5;
+  --color-primary-light: #6d5ce8;
+  --color-primary-dark: #245fca;
+  --color-primary-darker: #244bb8;
+  --color-secondary: #3478e5;
+  --color-background: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-text-primary: #172944;
+  --color-text-secondary: #52627c;
+  --color-border: #e1e8f1;
+  --color-border-light: #e7edf5;
+  --color-text-muted: #8290a5;
+  --radius-card: 16px;
+  --radius-control: 10px;
+  --shadow-card: 0 5px 22px rgba(23, 41, 68, .055);
+  --shadow-card-hover: 0 12px 28px rgba(23, 41, 68, .09);
+}
+html, body { min-height: 100%; background: var(--color-background); }
+body { color: var(--color-text-primary); }
+body.dark-theme, html[data-theme="dark"] { color-scheme: light !important; }
+.app-container, .layout, .page { background-color: var(--color-background); color: var(--color-text-primary); }
+.page { min-width: 0; }
+:where(button, input, select, textarea) { font: inherit; }
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid rgba(52, 120, 229, .25);
+  outline-offset: 2px;
+}
+:where(.mat-mdc-card, mat-card, .panel, .summary-card, .profile-card, .group-card, .expense-card, .settlement-card) {
+  border-color: var(--color-border-light);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+:where(.mat-mdc-raised-button.mat-primary, .mat-mdc-unelevated-button.mat-primary, .btn-primary, button.btn-primary) {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+}
+:where(.mat-mdc-raised-button.mat-primary, .mat-mdc-unelevated-button.mat-primary, .btn-primary, button.btn-primary):hover:not(:disabled) {
+  background: var(--color-primary-dark) !important;
+}
+:where(.mat-mdc-outlined-button, .btn-secondary, button.btn-secondary) {
+  border-color: var(--color-border) !important;
+}
+.mat-mdc-form-field { max-width: 100%; }
+.mat-mdc-text-field-wrapper { border-radius: var(--radius-control); }
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  max-width: 100%;
+}
+:where(table, .mat-mdc-table) { width: 100%; }
+:where(img, canvas, video, svg) { max-width: 100%; }
+:where(.empty-state, .empty-state-card, .no-data, .empty-message) {
+  color: var(--color-text-secondary);
+}
+:where(.loading-state, .page-loading) {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+:where(.error-message, .form-error, .field-error) { color: #b42318; }
+:where(.success-message) { color: #245fca; }
+@media (hover: hover) {
+  :where(.mat-mdc-card, mat-card, .panel, .summary-card, .profile-card, .group-card, .expense-card, .settlement-card):hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+@media (max-width: 768px) {
+  .page { margin-left: 0; padding: 0 0 82px; min-width: 0; }
+  :where(.mat-mdc-card, mat-card) { border-radius: 14px !important; }
+  :where(.mat-mdc-table, table) { display: block; max-width: 100%; overflow-x: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
