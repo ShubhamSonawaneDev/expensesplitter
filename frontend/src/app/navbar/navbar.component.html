@@ -7,7 +7,7 @@
   </div>
   <div class="navbar-actions">
     <span class="navbar-divider" aria-hidden="true"></span>
-    <button class="theme-toggle" (click)="toggleTheme()" title="Toggle theme" aria-label="Toggle theme"><mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon></button>
+
     <button class="notification-btn" routerLink="/notifications" aria-label="Notifications"><mat-icon>notifications_none</mat-icon><span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span></button>
     <div class="user-menu" *ngIf="currentUser$ | async as user">
       <button class="user-btn" [matMenuTriggerFor]="userMenu"><div class="avatar">{{ getInitials(user.name) }}</div><span class="user-name">{{ user.name }}</span><mat-icon>expand_more</mat-icon></button>
