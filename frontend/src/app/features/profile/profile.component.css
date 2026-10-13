@@ -52,11 +52,11 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #21b59b 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #6d5ce8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(12, 157, 133, 0.20);
+  box-shadow: 0 8px 24px rgba(52, 104, 245, 0.18);
 }
 
 .avatar mat-icon {
@@ -85,7 +85,7 @@
 
 .avatar-edit-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(12, 157, 133, 0.3);
+  box-shadow: 0 4px 12px rgba(52, 104, 245, 0.25);
 }
 
 .avatar-edit-btn mat-icon {
@@ -203,7 +203,7 @@
 .action-buttons .save-btn {
   padding: 10px 20px;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #21b59b 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #6d5ce8 100%);
   border: none;
   color: white;
   font-weight: 600;
@@ -214,7 +214,7 @@
 
 .action-buttons .save-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(12, 157, 133, 0.3);
+  box-shadow: 0 6px 20px rgba(52, 104, 245, 0.25);
 }
 
 .action-buttons .save-btn:disabled {
@@ -371,3 +371,11 @@
     height: 36px;
   }
 }
+
+/* Shared reference theme */
+.profile-container{width:100%;max-width:1180px;margin:0 auto;padding:clamp(16px,2.2vw,30px)!important}
+.profile-card{border:1px solid #e4eaf4!important;border-radius:16px!important;background:#fff!important;box-shadow:0 5px 22px rgba(23,41,68,.055)!important}
+.profile-header h2{color:#142746!important;font-weight:750!important;letter-spacing:-.4px}
+.profile-header p{color:#72819a!important}
+.edit-btn,.save-btn,.avatar-edit-btn{background:#3868f5!important;color:#fff!important;border-radius:10px!important}
+@media(max-width:600px){.profile-container{padding:14px 12px 22px!important}.profile-card{padding:17px!important}.profile-header{align-items:flex-start!important;gap:12px!important;flex-wrap:wrap}.profile-header-left{gap:12px!important}.avatar{width:56px!important;height:56px!important}.form-grid{grid-template-columns:minmax(0,1fr)!important}}
