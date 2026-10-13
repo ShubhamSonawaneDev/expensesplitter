@@ -12,17 +12,18 @@
 
 .page {
   flex: 1;
-  padding: var(--spacing-lg);
+  min-width: 0;
+  padding: 0;
   background: var(--color-background);
   margin-left: var(--sidebar-width);
   min-height: calc(100vh - var(--navbar-height));
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease;
+  overflow-x: clip;
 }
 
 @media (max-width: 768px) {
   .page {
     margin-left: 0;
-    padding: var(--spacing-md);
-    padding-bottom: 80px;
+    padding: 0 0 80px;
   }
 }
