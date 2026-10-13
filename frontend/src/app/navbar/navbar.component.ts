@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
@@ -25,7 +25,7 @@ import { User } from '../core/models/user.model';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   currentUser$: Observable<User | null>;
   unreadCount = 0;
 
@@ -35,7 +35,6 @@ export class NavbarComponent implements OnInit {
   ) {
     this.currentUser$ = this.authService.currentUser$;
   }
-
 
   getInitials(name: string): string {
     if (!name) return '?';
