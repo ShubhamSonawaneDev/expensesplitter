@@ -1,133 +1,99 @@
-<div class="dashboard">
-  <div class="dashboard-header">
-    <h1>Dashboard</h1>
-    <div class="header-actions">
+<div class="dashboard-shell">
+  <header class="dashboard-topbar">
+    <div class="topbar-copy">
+      <span class="eyebrow">YOUR FINANCIAL OVERVIEW</span>
+      <h1>Good morning, Shubham <span class="wave">✦</span></h1>
+      <p>Here’s your expense activity and balances at a glance.</p>
+    </div>
+    <div class="topbar-actions">
       <div class="dropdown" [class.open]="dropdownOpen">
-        <button class="btn btn-outline" (click)="dropdownOpen = !dropdownOpen">
-          <mat-icon>download</mat-icon>
-          Download Reports
+        <button class="action-button action-quiet" (click)="dropdownOpen = !dropdownOpen">
+          <i class="bi bi-download"></i><span>Export</span><i class="bi bi-chevron-down small-icon"></i>
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/api/reports/expenses/csv" target="_blank">Export Expenses (CSV)</a></li>
-          <li><a class="dropdown-item" href="/api/reports/settlements/csv" target="_blank">Export Settlements (CSV)</a></li>
-          <li><a class="dropdown-item" href="/api/reports/summary/html" target="_blank">View Summary Report (HTML)</a></li>
+          <li><a class="dropdown-item" href="/api/reports/expenses/csv" target="_blank"><i class="bi bi-filetype-csv"></i> Export Expenses (CSV)</a></li>
+          <li><a class="dropdown-item" href="/api/reports/settlements/csv" target="_blank"><i class="bi bi-filetype-csv"></i> Export Settlements (CSV)</a></li>
+          <li><a class="dropdown-item" href="/api/reports/summary/html" target="_blank"><i class="bi bi-file-earmark-text"></i> View Summary Report</a></li>
         </ul>
       </div>
-      <button class="btn btn-primary" routerLink="/expenses/add">
-        <mat-icon>add</mat-icon>
-        Add Expense
-      </button>
+      <button class="action-button action-primary" routerLink="/expenses/add"><i class="bi bi-plus-lg"></i> Add expense</button>
     </div>
-  </div>
+  </header>
 
   <div *ngIf="loading" class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p>Loading dashboard...</p>
+    <mat-spinner diameter="42"></mat-spinner>
+    <p>Preparing your overview…</p>
   </div>
 
-  <div *ngIf="!loading" class="content">
-    <div class="stats-grid">
-      <app-balance-card title="Total Expense" [amount]="totalExpense" icon="account_balance" cardClass="primary"></app-balance-card>
-      <app-balance-card title="You Owe" [amount]="youOwe" icon="trending_down" cardClass="danger"></app-balance-card>
-      <app-balance-card title="You Are Owed" [amount]="youAreOwed" icon="trending_up" cardClass="secondary"></app-balance-card>
-    </div>
+  <main *ngIf="!loading" class="dashboard-content">
+    <section class="summary-grid" aria-label="Balance summary">
+      <article class="summary-card summary-total">
+        <div class="summary-top"><span class="summary-icon"><i class="bi bi-wallet2"></i></span><span class="summary-caption">ALL ACTIVITY</span></div>
+        <p class="summary-label">Total expenses</p>
+        <h2>{{ totalExpense | currency:'INR':'symbol':'1.0-0' }}</h2>
+        <span class="summary-foot"><i class="bi bi-graph-up-arrow"></i> Across your expenses</span>
+      </article>
+      <article class="summary-card summary-owe">
+        <div class="summary-top"><span class="summary-icon"><i class="bi bi-arrow-up-right-circle"></i></span><span class="summary-caption">YOUR BALANCE</span></div>
+        <p class="summary-label">You owe</p>
+        <h2>{{ youOwe | currency:'INR':'symbol':'1.0-0' }}</h2>
+        <span class="summary-foot"><i class="bi bi-info-circle"></i> To friends and groups</span>
+      </article>
+      <article class="summary-card summary-owed">
+        <div class="summary-top"><span class="summary-icon"><i class="bi bi-arrow-down-left-circle"></i></span><span class="summary-caption">YOUR BALANCE</span></div>
+        <p class="summary-label">You are owed</p>
+        <h2>{{ youAreOwed | currency:'INR':'symbol':'1.0-0' }}</h2>
+        <span class="summary-foot"><i class="bi bi-check2-circle"></i> Others owe you</span>
+      </article>
+      <article class="summary-card summary-count">
+        <div class="summary-top"><span class="summary-icon"><i class="bi bi-receipt"></i></span><span class="summary-caption">RECORDS</span></div>
+        <p class="summary-label">Recent expenses</p>
+        <h2>{{ recentExpenses.length }}</h2>
+        <span class="summary-foot"><i class="bi bi-clock-history"></i> Latest entries loaded</span>
+      </article>
+    </section>
 
-    <div class="charts-section" *ngIf="recentExpenses.length > 0">
-      <div class="card chart-card">
-        <div class="card-header">
-          <h3 class="card-title">Monthly Spending Trend</h3>
-        </div>
+    <section class="insights-grid">
+      <article class="panel spending-panel">
+        <div class="panel-heading"><div><span class="panel-kicker">YOUR TRENDS</span><h2>Monthly spending</h2><p>Track how your spending changes over time.</p></div><span class="panel-symbol"><i class="bi bi-activity"></i></span></div>
         <div class="chart-container">
-          <canvas baseChart
-            [data]="lineChartData"
-            [options]="lineChartOptions"
-            [type]="lineChartType"
-            [legend]="lineChartLegend">
-          </canvas>
+          <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType" [legend]="lineChartLegend"></canvas>
         </div>
-      </div>
+      </article>
+      <article class="panel category-panel">
+        <div class="panel-heading"><div><span class="panel-kicker">WHERE IT GOES</span><h2>Expense categories</h2><p>A breakdown of the categories in your activity.</p></div><span class="panel-symbol violet"><i class="bi bi-pie-chart"></i></span></div>
+        <div class="chart-container category-chart">
+          <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="pieChartType"></canvas>
+        </div>
+      </article>
+    </section>
 
-      <div class="card chart-card">
-        <div class="card-header">
-          <h3 class="card-title">Expenses by Category</h3>
-        </div>
-        <div class="chart-container">
-          <canvas baseChart
-            [data]="pieChartData"
-            [options]="pieChartOptions"
-            [type]="pieChartType">
-          </canvas>
-        </div>
-      </div>
-
-      <div class="card chart-card">
-        <div class="card-header">
-          <h3 class="card-title">Expenses vs Settlements</h3>
-        </div>
-        <div class="chart-container">
-          <canvas baseChart
-            [data]="barChartData"
-            [options]="barChartOptions"
-            [type]="barChartType"
-            [legend]="barChartLegend">
-          </canvas>
-        </div>
-      </div>
-
-      <div class="card chart-card">
-        <div class="card-header">
-          <h3 class="card-title">Quick Stats</h3>
-        </div>
-        <div class="stats-grid-internal">
-          <div class="stat-item">
-            <mat-icon>receipt_long</mat-icon>
-            <div class="stat-info">
-              <span class="stat-value">{{ recentExpenses.length }}</span>
-              <span class="stat-label">Total Expenses</span>
-            </div>
-          </div>
-          <div class="stat-item">
-            <mat-icon>category</mat-icon>
-            <div class="stat-info">
-              <span class="stat-value">{{ getUniqueCategories() }}</span>
-              <span class="stat-label">Categories Used</span>
-            </div>
-          </div>
-          <div class="stat-item">
-            <mat-icon>calculate</mat-icon>
-            <div class="stat-info">
-              <span class="stat-value">₹{{ getAverageExpense() | number:'1.2-2' }}</span>
-              <span class="stat-label">Average Expense</span>
-            </div>
-          </div>
-          <div class="stat-item">
-            <mat-icon>trending_up</mat-icon>
-            <div class="stat-info">
-              <span class="stat-value">₹{{ totalExpense | number:'1.2-2' }}</span>
-              <span class="stat-label">Total Spent</span>
-            </div>
+    <section class="lower-grid">
+      <article class="panel recent-panel">
+        <div class="panel-heading compact-heading"><div><span class="panel-kicker">LATEST ACTIVITY</span><h2>Recent expenses</h2></div><a routerLink="/expenses" class="view-all">View all <i class="bi bi-arrow-up-right"></i></a></div>
+        <div *ngIf="recentExpenses.length > 0" class="expense-list">
+          <div class="expense-row expense-row-head"><span>Expense</span><span>Category</span><span>Amount</span><span></span></div>
+          <div class="expense-row" *ngFor="let expense of recentExpenses">
+            <div class="expense-main"><span class="expense-avatar"><i class="bi bi-receipt-cutoff"></i></span><div class="expense-name"><strong>{{ expense.description }}</strong><small>{{ expense.date | date:'dd MMM yyyy' }}</small></div></div>
+            <span class="category-pill">{{ expense.category?.name || 'Uncategorized' }}</span>
+            <strong class="expense-amount">{{ expense.amount | currency:'INR':'symbol':'1.0-2' }}</strong>
+            <a class="row-link" routerLink="/expenses" aria-label="View expenses"><i class="bi bi-chevron-right"></i></a>
           </div>
         </div>
-      </div>
-    </div>
+        <div *ngIf="recentExpenses.length === 0" class="empty-state">
+          <span class="empty-icon"><i class="bi bi-receipt"></i></span><h3>Your expense story starts here</h3><p>Add your first expense to see your activity and spending insights.</p>
+          <button class="action-button action-primary" routerLink="/expenses/add"><i class="bi bi-plus-lg"></i> Add your first expense</button>
+        </div>
+      </article>
 
-    <div class="section-header">
-      <h2>Recent Expenses</h2>
-      <a routerLink="/expenses" class="view-all">View All <mat-icon>arrow_forward</mat-icon></a>
-    </div>
-
-    <div class="expenses-grid">
-      <app-expense-card *ngFor="let expense of recentExpenses" [expense]="expense"></app-expense-card>
-    </div>
-
-    <div *ngIf="recentExpenses.length === 0" class="empty-state">
-      <mat-icon>receipt_long</mat-icon>
-      <h3>No expenses yet</h3>
-      <p>Start by adding your first expense!</p>
-      <button class="btn btn-primary" routerLink="/expenses/add">
-        <mat-icon>add</mat-icon>
-        Add Expense
-      </button>
-    </div>
-  </div>
+      <aside class="panel quick-panel">
+        <div class="panel-heading compact-heading"><div><span class="panel-kicker">GET THINGS DONE</span><h2>Quick actions</h2></div><span class="panel-symbol amber"><i class="bi bi-lightning-charge"></i></span></div>
+        <button class="quick-action" routerLink="/expenses/add"><span class="quick-icon blue"><i class="bi bi-plus-circle"></i></span><span><strong>Add expense</strong><small>Record a new shared cost</small></span><i class="bi bi-arrow-up-right quick-arrow"></i></button>
+        <button class="quick-action" routerLink="/groups"><span class="quick-icon green"><i class="bi bi-people"></i></span><span><strong>Manage groups</strong><small>Organize shared expenses</small></span><i class="bi bi-arrow-up-right quick-arrow"></i></button>
+        <button class="quick-action" routerLink="/settlements"><span class="quick-icon violet"><i class="bi bi-arrow-left-right"></i></span><span><strong>Settle balances</strong><small>Keep everyone up to date</small></span><i class="bi bi-arrow-up-right quick-arrow"></i></button>
+        <button class="quick-action" routerLink="/budgets"><span class="quick-icon orange"><i class="bi bi-piggy-bank"></i></span><span><strong>Plan a budget</strong><small>Keep spending on track</small></span><i class="bi bi-arrow-up-right quick-arrow"></i></button>
+        <div class="quick-note"><i class="bi bi-shield-check"></i><span><strong>Stay in control</strong><small>Keep shared costs clear and organized.</small></span></div>
+      </aside>
+    </section>
+  </main>
 </div>
