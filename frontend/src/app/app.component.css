@@ -1,4 +1,3 @@
-/* App Layout */
 .app-container {
   min-height: 100vh;
   background: var(--color-background);
@@ -12,7 +11,7 @@
 
 .page {
   flex: 1;
-  padding: var(--spacing-lg);
+  padding: 28px;
   background: var(--color-background);
   margin-left: var(--sidebar-width);
   min-height: calc(100vh - var(--navbar-height));
@@ -22,7 +21,7 @@
 @media (max-width: 768px) {
   .page {
     margin-left: 0;
-    padding: var(--spacing-md);
+    padding: 16px;
     padding-bottom: 80px;
   }
 }

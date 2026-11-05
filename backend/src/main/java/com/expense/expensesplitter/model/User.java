@@ -71,8 +71,17 @@ public class User {
     @Builder.Default
     private List<Bill> bills = new ArrayList<>();
 
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "remember_token")
+    private String rememberToken;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

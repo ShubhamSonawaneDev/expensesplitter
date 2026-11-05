@@ -1,27 +1,38 @@
 <div class="dashboard">
   <div class="dashboard-header">
-    <h1>Dashboard</h1>
-    <div class="header-actions">
-      <div class="dropdown" [class.open]="dropdownOpen">
-        <button class="btn btn-outline" (click)="dropdownOpen = !dropdownOpen">
-          <mat-icon>download</mat-icon>
-          Download Reports
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/api/reports/expenses/csv" target="_blank">Export Expenses (CSV)</a></li>
-          <li><a class="dropdown-item" href="/api/reports/settlements/csv" target="_blank">Export Settlements (CSV)</a></li>
-          <li><a class="dropdown-item" href="/api/reports/summary/html" target="_blank">View Summary Report (HTML)</a></li>
-        </ul>
+    <div class="header-content">
+      <div class="header-greeting">
+        <h1>Dashboard</h1>
+        <p class="header-subtitle">Track your expenses and stay on top of your finances</p>
       </div>
-      <button class="btn btn-primary" routerLink="/expenses/add">
-        <mat-icon>add</mat-icon>
-        Add Expense
-      </button>
+      <div class="header-actions">
+        <div class="dropdown" [class.open]="dropdownOpen">
+          <button class="btn btn-outline" (click)="dropdownOpen = !dropdownOpen">
+            <mat-icon>download</mat-icon>
+            Export
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/api/reports/expenses/csv" target="_blank">
+              <mat-icon>description</mat-icon> Expenses (CSV)
+            </a></li>
+            <li><a class="dropdown-item" href="/api/reports/settlements/csv" target="_blank">
+              <mat-icon>sync_alt</mat-icon> Settlements (CSV)
+            </a></li>
+            <li><a class="dropdown-item" href="/api/reports/summary/html" target="_blank">
+              <mat-icon>assessment</mat-icon> Summary Report
+            </a></li>
+          </ul>
+        </div>
+        <button class="btn btn-primary" routerLink="/expenses/add">
+          <mat-icon>add</mat-icon>
+          Add Expense
+        </button>
+      </div>
     </div>
   </div>
 
   <div *ngIf="loading" class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
+    <div class="loading-spinner"></div>
     <p>Loading dashboard...</p>
   </div>
 
@@ -80,28 +91,28 @@
         </div>
         <div class="stats-grid-internal">
           <div class="stat-item">
-            <mat-icon>receipt_long</mat-icon>
+            <div class="stat-icon-wrap"><mat-icon>receipt_long</mat-icon></div>
             <div class="stat-info">
               <span class="stat-value">{{ recentExpenses.length }}</span>
               <span class="stat-label">Total Expenses</span>
             </div>
           </div>
           <div class="stat-item">
-            <mat-icon>category</mat-icon>
+            <div class="stat-icon-wrap teal"><mat-icon>category</mat-icon></div>
             <div class="stat-info">
               <span class="stat-value">{{ getUniqueCategories() }}</span>
-              <span class="stat-label">Categories Used</span>
+              <span class="stat-label">Categories</span>
             </div>
           </div>
           <div class="stat-item">
-            <mat-icon>calculate</mat-icon>
+            <div class="stat-icon-wrap amber"><mat-icon>calculate</mat-icon></div>
             <div class="stat-info">
               <span class="stat-value">₹{{ getAverageExpense() | number:'1.2-2' }}</span>
-              <span class="stat-label">Average Expense</span>
+              <span class="stat-label">Average</span>
             </div>
           </div>
           <div class="stat-item">
-            <mat-icon>trending_up</mat-icon>
+            <div class="stat-icon-wrap pink"><mat-icon>trending_up</mat-icon></div>
             <div class="stat-info">
               <span class="stat-value">₹{{ totalExpense | number:'1.2-2' }}</span>
               <span class="stat-label">Total Spent</span>
@@ -121,9 +132,11 @@
     </div>
 
     <div *ngIf="recentExpenses.length === 0" class="empty-state">
-      <mat-icon>receipt_long</mat-icon>
+      <div class="empty-icon-wrap">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
       <h3>No expenses yet</h3>
-      <p>Start by adding your first expense!</p>
+      <p>Start by adding your first expense to track and split with friends!</p>
       <button class="btn btn-primary" routerLink="/expenses/add">
         <mat-icon>add</mat-icon>
         Add Expense

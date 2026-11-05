@@ -41,8 +41,8 @@ export class AuthService {
     return this.currentUserValue?.token || null;
   }
 
-  login(email: string, password: string): Observable<User> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password }).pipe(
+  login(email: string, password: string, rememberMe: boolean = false): Observable<User> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password, rememberMe }).pipe(
       map((response) => {
         if (response && response.token) {
           sessionStorage.setItem('currentUser', JSON.stringify(response));
@@ -78,6 +78,18 @@ export class AuthService {
     );
   }
 
+    googleLogin(idToken: string): Observable<User> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/google`, { idToken }).pipe(
+      map((response) => {
+        if (response && response.token) {
+          sessionStorage.setItem('currentUser', JSON.stringify(response));
+          this.currentUserSubject.next(response);
+        }
+        return response;
+      }),
+    );
+  }
+
   isAuthenticated(): boolean {
     return !!this.currentUserValue;
   }
@@ -94,5 +106,13 @@ export class AuthService {
         return response;
       }),
     );
+  }
+
+    forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/forgot-password`, { email });
+  }
+
+   resetPassword(token: string, newPassword: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/auth/reset-password`, { token, password: newPassword });
   }
 }

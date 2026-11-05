@@ -25,12 +25,16 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.showLayout = !event.url.includes('/auth/login') && !event.url.includes('/auth/register');
+      this.showLayout = !this.isAuthUrl(event.urlAfterRedirects || event.url);
     });
   }
 
   ngOnInit(): void {
     this.isDarkMode = this.themeService.isDarkMode();
-    this.showLayout = !this.router.url.includes('/auth/login') && !this.router.url.includes('/auth/register');
+    this.showLayout = !this.isAuthUrl(this.router.url);
+  }
+
+  private isAuthUrl(url: string): boolean {
+    return url.startsWith('/auth');
   }
 }

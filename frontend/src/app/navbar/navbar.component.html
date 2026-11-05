@@ -1,17 +1,19 @@
 <nav class="navbar">
   <div class="navbar-brand">
     <div class="logo" routerLink="/dashboard">
-      <span class="logo-icon">💰</span>
+      <div class="logo-icon-wrap">
+        <mat-icon>account_balance_wallet</mat-icon>
+      </div>
       <span class="logo-text">ExpenseSplitter</span>
     </div>
   </div>
 
   <div class="navbar-actions">
-    <button class="theme-toggle" (click)="toggleTheme()" title="Toggle theme">
+    <button class="action-btn theme-toggle" (click)="toggleTheme()" title="Toggle theme">
       <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
     </button>
 
-    <button class="notification-btn" routerLink="/notifications">
+    <button class="action-btn notification-btn" routerLink="/notifications">
       <mat-icon>notifications_none</mat-icon>
       <span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
     </button>
@@ -20,7 +22,7 @@
       <button class="user-btn" [matMenuTriggerFor]="userMenu">
         <div class="avatar">{{ getInitials(user.name) }}</div>
         <span class="user-name">{{ user.name }}</span>
-        <mat-icon>expand_more</mat-icon>
+        <mat-icon class="chevron">expand_more</mat-icon>
       </button>
       <mat-menu #userMenu="matMenu" class="user-dropdown">
         <button mat-menu-item routerLink="/profile">

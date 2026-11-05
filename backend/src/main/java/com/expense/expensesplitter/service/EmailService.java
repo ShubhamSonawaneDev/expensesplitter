@@ -11,6 +11,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,7 @@ import java.util.Map;
 @Service
 public class EmailService {
 
+        private static final Logger log = LoggerFactory.getLogger(EmailService.class);
     @Autowired
     private JavaMailSender mailSender;
 
@@ -153,17 +156,24 @@ public class EmailService {
         );
     }
 
-    @Async
+        @Async
     public void sendPasswordResetEmail(User user, String resetToken) {
+        String resetUrl = frontendUrl + "/auth/reset-password?token=" + resetToken;
+
+        // Dev fallback: SMTP not configured, so print the link instead of sending email
+        if (fromEmail == null || fromEmail.isBlank()) {
+            log.warn("SMTP not configured. PASSWORD RESET LINK for {} : {}", user.getEmail(), resetUrl);
+            return;
+        }
+
         Map<String, Object> variables = new HashMap<>();
         variables.put("userName", user.getName());
-        variables.put("resetUrl", frontendUrl + "/reset-password?token=" + resetToken);
+        variables.put("resetUrl", resetUrl);
 
-        sendEmail(
-            user.getEmail(),
-            "Password Reset Request",
-            "password-reset",
-            variables
-        );
+        try {
+            sendEmail(user.getEmail(), "Password Reset Request", "password-reset", variables);
+        } catch (Exception e) {
+            log.error("Failed to send reset email to {}: {}", user.getEmail(), e.getMessage());
+        }
     }
 }
